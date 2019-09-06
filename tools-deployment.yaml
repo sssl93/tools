@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: x-tools
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: x-tools
+  template:
+    metadata:
+      labels:
+        name: x-tools
+    spec:
+      containers:
+      - image: x-tools:v1.0.0
+        name: x-tools
+        resources:
+          requests:
+            memory: 50Mi
