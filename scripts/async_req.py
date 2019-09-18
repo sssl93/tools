@@ -17,10 +17,12 @@ async def fetch(url, method, params=None, data=None):
 
 
 _url = "http://192.168.110.102"
+_url = "http://192.168.99.100:9014/reset-flow"
+_method = "POST"
 
 tasks = []
 for i in range(1000):
-    tasks.append(fetch(_url, 'GET'))
+    tasks.append(fetch(_url, _method))
 
 event_loop = asyncio.get_event_loop()
 start = time.time()

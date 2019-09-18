@@ -1,7 +1,7 @@
 FROM python:3.7.4-alpine3.10
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-RUN apk add --no-cache vim apache2-utils
+RUN apk add --no-cache vim apache2-utils curl socat
 
 COPY bin /opt/tools/bin
 COPY scripts /opt/tools/scripts

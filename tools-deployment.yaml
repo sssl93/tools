@@ -14,7 +14,7 @@ spec:
         name: x-tools
     spec:
       containers:
-      - image: x-tools:v1.0.0
+      - image: 10.20.51.147:4000/x-tools:v1.0.0
         name: x-tools
         resources:
           requests:
