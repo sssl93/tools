@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: x-tools
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: x-tools
+  template:
+    metadata:
+      #"kubernetes.customized/fabric-networks" : "net01"
+      labels:
+        name: x-tools
+    spec:
+      #nodeSelector:
+      #  kubernetes.io/hostname: c2
+      containers:
+      - image: beyond.io:5000/fabric/x-tools:v1.0.0
+        name: x-tools
+        resources:
+          requests:
+            memory: 100Mi
+        securityContext:
+          capabilities:
+            add:
+              - NET_ADMIN
+      tolerations:
+       - key: "node-role.kubernetes.io/master"
+         operator: "Exists"
+         effect: "NoSchedule"

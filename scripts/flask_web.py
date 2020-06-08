@@ -17,6 +17,11 @@ def route_exist():
     return jsonify(data)
 
 
+@app.route('', methods=['GET'])
+def home():
+    return jsonify({'message': 'hello'})
+
+
 if __name__ == '__main__':
     # app.debug = True
-    app.run('::', 9013)
+    app.run('::', 8089)
