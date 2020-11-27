@@ -17,7 +17,7 @@ def route_exist():
     return jsonify(data)
 
 
-@app.route('', methods=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     return jsonify({'message': 'hello'})
 

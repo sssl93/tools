@@ -1,32 +1,38 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: x-tools
   namespace: default
 spec:
-  replicas: 3
   selector:
     matchLabels:
       name: x-tools
   template:
     metadata:
-      #"kubernetes.customized/fabric-networks" : "net01"
       labels:
         name: x-tools
     spec:
-      #nodeSelector:
-      #  kubernetes.io/hostname: c2
       containers:
       - image: beyond.io:5000/fabric/x-tools:v1.0.0
         name: x-tools
         resources:
           requests:
-            memory: 100Mi
+            memory: "5Mi"
+            cpu: "5m"
         securityContext:
           capabilities:
             add:
               - NET_ADMIN
       tolerations:
+       - effect: NoSchedule
+         operator: Exists
+       - effect: NoExecute
+         operator: Exists
+       - key: CriticalAddonsOnly
+         operator: Exists
        - key: "node-role.kubernetes.io/master"
-         operator: "Exists"
          effect: "NoSchedule"
+       - key: CriticalAddonsOnly
+         operator: Exists
+
+
