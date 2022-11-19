@@ -42,6 +42,15 @@ cat >>/etc/hosts <<EOF
 10.20.19.21 beyond.io
 EOF
 
+cat >>/etc/bashrc <<EOF
+alias apod='kubectl get pods -A -o wide'
+alias asvc='kubectl get svc -A -o wide'
+alias aep='kubectl get ep -A -o wide'
+alias ovsbash="docker exec -it `docker ps|grep  ovs|grep supervisord| awk '{print $1}'` bash"
+alias reset-ipt="iptables -F -t raw && iptables -F -t nat && iptables -F -t mangle && iptables -F -t filter"
+alias clean-k8s-pod="docker rm `docker ps -a|grep k8s|awk '{print $1}'`"
+EOF
+
 systemctl daemon-reload && systemctl restart docker && systemctl enable docker
 
 yum -y install install autoconf automake libtool kernel-devel
