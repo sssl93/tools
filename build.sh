@@ -1,4 +1,4 @@
-VERSION="v1.0.5"
+VERSION="v1.0.6"
 REGISTRY="beyond.io:5000/fabric/"
 
 go build -o=bin/go-server -ldflags "-s -w" -tags netgo -a  cmd/go-webserver/main.go

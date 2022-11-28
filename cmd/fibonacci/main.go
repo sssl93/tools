@@ -7,28 +7,31 @@ import (
 	"time"
 )
 
-func OutputFibonacci(n int, wg *sync.WaitGroup) {
+func OutputFibonacci(n int, wg *sync.WaitGroup, noOutput bool) {
 	x, y := 0, 1
 
 	for i := 0; i <= n; i++ {
 		x, y = y, x+y
-		fmt.Println(x)
+		if !noOutput {
+			fmt.Println(x)
+		}
 	}
 
 	wg.Done()
 }
 
 func main() {
-	n := flag.Int("number", 2000000, "Number for fibonacci test")
-	t := flag.Int("tasks", 10, "Task number for fibonacci test")
+	numbers := flag.Int("number", 2000000, "Number for fibonacci test")
+	tasks := flag.Int("tasks", 10, "The number of tasks for fibonacci test")
+	noOutput := flag.Bool("no-output", false, "Don't output fibonacci result to stdout")
 	flag.Parse()
 
 	s := time.Now()
 	wg := sync.WaitGroup{}
-	wg.Add(*t)
+	wg.Add(*tasks)
 
-	for i := 0; i < *t; i++ {
-		go OutputFibonacci(*n, &wg)
+	for i := 0; i < *tasks; i++ {
+		go OutputFibonacci(*numbers, &wg, *noOutput)
 	}
 
 	wg.Wait()
