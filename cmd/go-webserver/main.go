@@ -16,6 +16,7 @@ import (
 
 var products = newDefaultProducts()
 var localIPs = getLocalIPs()
+var hosts = make(map[string]string)
 var locker sync.Mutex
 
 func getLocalIPs() (ips []string) {
@@ -58,7 +59,11 @@ func unmarshalTextResponse(resp *http.Response) (string, error) {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	resp := fmt.Sprintf("%s LocalIPs %v Host %s Remote %s", time.Now(), localIPs, r.Host, r.RemoteAddr)
+	resp := fmt.Sprintf("%s LocalIPs %v Host %s Remote %s\n", time.Now(), localIPs, r.Host, r.RemoteAddr)
+	for k, v := range hosts {
+		resp = resp + k + ": " + v + "\n"
+	}
+
 	fmt.Println(resp)
 	_, _ = fmt.Fprintf(w, resp)
 }
@@ -157,9 +162,22 @@ func showProductsHandler(w http.ResponseWriter, r *http.Request) {
 	_, _ = fmt.Fprintf(w, "Products: %d\n", products)
 }
 
+func createHostHandler(w http.ResponseWriter, r *http.Request) {
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	if len(string(reqBody)) > 0 {
+		x := strings.SplitN(string(reqBody), ":", 2)
+		if len(x) == 2 {
+			hosts[x[0]] = x[1]
+		}
+	}
+
+	_, _ = fmt.Fprintf(w, "ok\n")
+}
+
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler).Methods(http.MethodGet)
+	r.HandleFunc("/hosts/", createHostHandler).Methods(http.MethodPost)
 	r.HandleFunc("/forwarding/", forwardHandler).Methods(http.MethodGet)
 	r.HandleFunc("/get-products/", getProductsHandler).Methods(http.MethodGet)
 	r.HandleFunc("/products/", showProductsHandler).Methods(http.MethodGet)
