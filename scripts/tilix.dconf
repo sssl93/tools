@@ -1,0 +1,34 @@
+[/]
+enable-wide-handle=true
+prompt-on-close=true
+prompt-on-close-process=false
+prompt-on-delete-profile=true
+quake-hide-headerbar=false
+quake-specific-monitor=0
+sidebar-on-right=false
+terminal-title-style='none'
+theme-variant='system'
+use-tabs=true
+warn-vte-config-issue=false
+window-style='disable-csd-hide-toolbar'
+
+[profiles]
+list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d']
+
+[profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+background-color='#070711110404'
+background-transparency-percent=0
+badge-color='#AC7EA8'
+badge-color-set=false
+bold-color-set=false
+cursor-colors-set=false
+default-size-rows=24
+dim-transparency-percent=16
+draw-margin=80
+font='Monospace 10'
+foreground-color='#FFFFFF'
+highlight-colors-set=false
+palette=['#2E3436', '#CC0000', '#4E9A06', '#C4A000', '#3465A4', '#75507B', '#06989A', '#D3D7CF', '#555753', '#EF2929', '#8AE234', '#FCE94F', '#729FCF', '#AD7FA8', '#34E2E2', '#EEEEEC']
+use-system-font=false
+use-theme-colors=false
+visible-name='默认'
