@@ -1,7 +1,9 @@
-FROM python:3.7.4-alpine3.10
+#ARG ARCH
+#FROM beyond.io:5000/python-{ARCH}:3.11.4-alpine3.18
+FROM python:3.11.4-alpine3.18
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-RUN apk add --no-cache musl-dev gcc vim apache2-utils curl socat iperf3 tcpdump net-tools
+RUN apk update && apk add --no-cache musl-dev gcc vim apache2-utils curl socat iperf3 tcpdump net-tools conntrack-tools bind-tools
 
 
 COPY tool-scripts /opt/tools/scripts

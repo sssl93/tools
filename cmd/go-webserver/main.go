@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net"
@@ -12,6 +11,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 var products = newDefaultProducts()
@@ -165,6 +166,7 @@ func showProductsHandler(w http.ResponseWriter, r *http.Request) {
 func createHostHandler(w http.ResponseWriter, r *http.Request) {
 	reqBody, _ := ioutil.ReadAll(r.Body)
 	if len(string(reqBody)) > 0 {
+		hosts = make(map[string]string)
 		x := strings.SplitN(string(reqBody), ":", 2)
 		if len(x) == 2 {
 			hosts[x[0]] = x[1]
