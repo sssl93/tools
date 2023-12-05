@@ -22,6 +22,12 @@ echo SELINUX=disabled > /etc/selinux/config && setenforce 0
 update-alternatives --set  iptables /usr/sbin/iptables-legacy
 swapoff -a && sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 
+cat >>/etc/hosts <<EOF
+
+#10.22.19.21 beyond.io bocloud-bj.io
+192.110.0.1 beyond.io bocloud-bj.io
+EOF
+
 
 ### Docker
 mkdir -p /etc/docker
@@ -29,7 +35,7 @@ cat >/etc/docker/daemon.json <<EOF
 {
   "registry-mirrors": ["https://hdi5v8p1.mirror.aliyuncs.com"],
   "exec-opts": ["native.cgroupdriver=systemd"],
-  "insecure-registries" : [ "beyond.io:5000" , "abcsys.cn:5000", "registry163.bocloud.com:5000", "deploy.bocloud.k8s:40443"]
+  "insecure-registries" : [ "beyond.io:5000" , "abcsys.cn:5000", "registry163.bocloud.com:5000", "deploy.bocloud.k8s:40443", "http://bocloud-bj.io:5000", "http://beyond.io:5000", "bocloud-bj.io:5000"]
 }
 EOF
 
@@ -46,6 +52,9 @@ curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main
 EOF
+
+git config --global credential.helper store
+
 
 #curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg
 #echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
