@@ -18,13 +18,16 @@ debug = true
   http = true
 [registry."deploy.bocloud.k8s:5001"]
   http = true
+[registry."deploy.bocloud.k8s:40443"]
+  http = true
 EOF
 
 docker run --privileged --rm tonistiigi/binfmt --uninstall qemu-* && \
 	docker run --privileged --rm tonistiigi/binfmt --install all && \
 	docker buildx rm mybuilder
 
-docker buildx create --use --name mybuilder --config /etc/buildkit/buildkitd.toml --buildkitd-flags '--allow-insecure-entitlement network.host security.insecure' --driver-opt network=host  && \
+
+docker buildx create --use --name mybuilder --config /etc/buildkit/buildkitd.toml --buildkitd-flags '--allow-insecure-entitlement network.host security.insecure' --driver-opt network=host  --driver-opt env.http_proxy=http://127.0.0.1:11909 --driver-opt env.https_proxy=http://127.0.0.1:11909  && \
      	docker buildx inspect mybuilder --bootstrap && \
     	docker buildx ls
 
